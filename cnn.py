@@ -1,11 +1,13 @@
 #Opencv-contrib-python, tqdm, pandas, sklearn, scipy, tensorflow, tflearn
-import cv2
 import os
-import pandas as pd
+
+import cv2
 import numpy as np
-from tqdm import tqdm
-from sklearn.preprocessing import LabelEncoder
+import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from tqdm import tqdm
+
 
 def main():
     ImgSize = 512

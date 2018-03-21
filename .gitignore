@@ -99,3 +99,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+
+# side files
+new_sample_labels.csv
+sample_labels.csv
+X_sample.npy
