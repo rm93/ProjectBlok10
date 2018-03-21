@@ -10,7 +10,7 @@ from sklearn.model_selection import train_test_split
 def main():
     ImgSize = 512
 
-    ResizeImages(path='../EindProjectBlok10a/data/images/', new_path='../EindProjectBlok10a/data/resized-'+str(ImgSize)+'/', img_size=ImgSize)
+    ResizeImages(path='../ProjectBlok10/data/images/', new_path='../ProjectBlok10/data/resized-'+str(ImgSize)+'/', img_size=ImgSize)
     CreateNewCsv(ImgSize)
     CreateImageArray(ImgSize)
     X_train, y_train, X_test, y_test = SplitData()
@@ -39,9 +39,9 @@ def ResizeImages(path, new_path, img_size):
 
 def CreateNewCsv(ImgSize):
     #Reads in the csv with al the info and edit the file to save only the needed info.
-    if not os.path.exists('../EindProjectBlok10a/data/new_sample_labels.csv'):
-        data = pd.read_csv("../EindProjectBlok10a/data/sample_labels.csv")
-        sample = os.listdir('../EindProjectBlok10a/data/resized-'+str(ImgSize)+'/')
+    if not os.path.exists('../ProjectBlok10/data/new_sample_labels.csv'):
+        data = pd.read_csv("../ProjectBlok10/data/sample_labels.csv")
+        sample = os.listdir('../ProjectBlok10/data/resized-'+str(ImgSize)+'/')
 
         sample = pd.DataFrame({'Image_Index': sample})
 
@@ -60,26 +60,26 @@ def CreateNewCsv(ImgSize):
 
         print("Saving CSV")
 
-        sample.to_csv('../EindProjectBlok10a/data/new_sample_labels.csv', index=False, header=True)
+        sample.to_csv('../ProjectBlok10/data/new_sample_labels.csv', index=False, header=True)
     else:
         print("The labels are already processed")
 
 def CreateImageArray(ImgSize):
     #Converts each image to an array, and appends each array to a new NumPy array, based on the image column equaling the image file name.
-    if not os.path.exists('../EindProjectBlok10a/data/X_sample.npy'):
+    if not os.path.exists('../ProjectBlok10/data/X_sample.npy'):
         print("Processing image array")
-        labels = pd.read_csv("../EindProjectBlok10a/data/new_sample_labels.csv")
+        labels = pd.read_csv("../ProjectBlok10/data/new_sample_labels.csv")
         lst_imgs = [l for l in labels['Image_Index']]
-        X_train = np.array([np.array(cv2.imread('../EindProjectBlok10a/data/resized-'+str(ImgSize)+'/' + img, cv2.IMREAD_GRAYSCALE)) for img in tqdm(lst_imgs)])
+        X_train = np.array([np.array(cv2.imread('../ProjectBlok10/data/resized-'+str(ImgSize)+'/' + img, cv2.IMREAD_GRAYSCALE)) for img in tqdm(lst_imgs)])
         print("Saving image array")
-        np.save('../EindProjectBlok10a/data/X_sample.npy', X_train)
+        np.save('../ProjectBlok10/data/X_sample.npy', X_train)
     else:
         print("The image array is already processed")
 
 def SplitData():
     # Import data
-    labels = pd.read_csv("../EindProjectBlok10a/data/sample_labels.csv")
-    X = np.load("../EindProjectBlok10a/data/X_sample.npy")
+    labels = pd.read_csv("../ProjectBlok10/data/sample_labels.csv")
+    X = np.load("../ProjectBlok10/data/X_sample.npy")
 
     y = labels.Finding_Labels
     label_encoder = LabelEncoder()
