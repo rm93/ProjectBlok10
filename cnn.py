@@ -13,11 +13,11 @@ import tensorflow as tf
 
 import model
 
-def ResizeImages(path, new_path, img_size):
+def ResizeImages(path, new_path, ImgSize):
     #Crops, resizes, and stores all images from a directory in a new directory.
 
     if not os.path.exists(new_path):
-        print("Resize the images to: {}px by {}px for further use.\n".format(img_size, img_size))
+        print("Resize the images to: {}px by {}px for further use.\n".format(ImgSize, ImgSize))
         os.makedirs(new_path)
         dirs = [l for l in os.listdir(path) if l != '.DS_Store']
 
@@ -26,7 +26,7 @@ def ResizeImages(path, new_path, img_size):
         for item in tqdm(dirs):
             # Read in all images as grayscale
             img = cv2.imread(path + item, cv2.IMREAD_GRAYSCALE)
-            img = cv2.resize(img, (img_size, img_size), 1)
+            img = cv2.resize(img, (ImgSize, ImgSize), 1)
             cv2.imwrite(str(new_path + item), img)
         total += 1
     else:
@@ -61,20 +61,20 @@ def CreateNewCsv(ImgSize):
 
 def CreateImageArray(ImgSize):
     #Converts each image to an array, and appends each array to a new NumPy array, based on the image column equaling the image file name.
-    if not os.path.exists('../ProjectBlok10/data/X_sample.npy'):
+    if not os.path.exists('../ProjectBlok10/data/X_sample_'+str(ImgSize)+'.npy'):
         print("Processing image array")
         labels = pd.read_csv("../ProjectBlok10/data/new_sample_labels.csv")
         lst_imgs = [l for l in labels['Image_Index']]
         X_train = np.array([np.array(cv2.imread('../ProjectBlok10/data/resized-'+str(ImgSize)+'/' + img, cv2.IMREAD_GRAYSCALE)) for img in tqdm(lst_imgs)])
         print("Saving image array")
-        np.save('../ProjectBlok10/data/X_sample.npy', X_train)
+        np.save('../ProjectBlok10/data/X_sample_'+str(ImgSize)+'.npy', X_train)
     else:
         print("The image array is already processed")
 
 def SplitData():
     # Import data
     labels = pd.read_csv("../ProjectBlok10/data/sample_labels.csv")
-    X = np.load("../ProjectBlok10/data/X_sample.npy")
+    X = np.load("../ProjectBlok10/data/X_sample_"+str(ImgSize)+".npy")
 
     y = labels.Finding_Labels
     label_encoder = LabelEncoder()
@@ -101,10 +101,10 @@ def Predict():
     return None
 
 if __name__ == '__main__':
-    ImgSize = 256  # 512
+    ImgSize = 512#256  # 512
 
     ResizeImages(path='../ProjectBlok10/data/images/', new_path='../ProjectBlok10/data/resized-' + str(ImgSize) + '/',
-                 img_size=ImgSize)
+                 ImgSize=ImgSize)
     CreateNewCsv(ImgSize)  #
     CreateImageArray(ImgSize)  # create image array of resized images
     X_train, y_train, X_test, y_test = SplitData()
