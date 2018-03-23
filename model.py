@@ -38,7 +38,6 @@ def convolutional_neural_network(x):
     #reshape image to 256*256
     #x = tf.reshape(x, shape=[-1, 256, 256, 1])
     #tf.to_float(x, name='ToFloat')
-    x = x.astype(float)
     #
     # #perform conv step
     conv1 = tf.nn.relu(conv2d(x, weights['W_conv1']) + biases['b_conv1'])

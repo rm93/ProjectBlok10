@@ -101,14 +101,17 @@ def Predict():
     return None
 
 if __name__ == '__main__':
-    ImgSize = 512#256  # 512
+    ImgSize = 256  # 512
 
     ResizeImages(path='../ProjectBlok10/data/images/', new_path='../ProjectBlok10/data/resized-' + str(ImgSize) + '/',
                  ImgSize=ImgSize)
     CreateNewCsv(ImgSize)  #
     CreateImageArray(ImgSize)  # create image array of resized images
     X_train, y_train, X_test, y_test = SplitData()
-    plot(X_train)
-    #m = model.train_neural_network(X_train)
+    #plot(X_train)
+    #Convert X_train to float32
+    X_train = tf.cast(X_train, tf.float32)
+    y_train = tf.cast(X_test, tf.float32)
+    m = model.train_neural_network(X_train)
     # define and train model
     #Predict()  # test model
