@@ -8,17 +8,10 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from tqdm import tqdm
 
+import matplotlib.pyplot as plt
+import tensorflow as tf
 
-def main():
-    ImgSize = 512
-
-    ResizeImages(path='../ProjectBlok10/data/images/', new_path='../ProjectBlok10/data/resized-'+str(ImgSize)+'/', img_size=ImgSize)
-    CreateNewCsv(ImgSize)
-    CreateImageArray(ImgSize)
-    X_train, y_train, X_test, y_test = SplitData()
-    cnn_model()
-    Predict()
-
+import model
 
 def ResizeImages(path, new_path, img_size):
     #Crops, resizes, and stores all images from a directory in a new directory.
@@ -93,10 +86,29 @@ def SplitData():
 
     return X_train, y_train, X_test, y_test
 
-def cnn_model():
-    None
+def plot(a):
+    c = 0
+    for i in a:
+        c += 1
+        if c <= 1:
+            plt.imshow(i)
+            print(i)
+            plt.show()
+            print(tf.cast(i, tf.float16))
 
 def Predict():
-    None
+    print("Ik kan niet voorspellen, zo slim ben ik nog niet.")
+    return None
 
-main()
+if __name__ == '__main__':
+    ImgSize = 256  # 512
+
+    ResizeImages(path='../ProjectBlok10/data/images/', new_path='../ProjectBlok10/data/resized-' + str(ImgSize) + '/',
+                 img_size=ImgSize)
+    CreateNewCsv(ImgSize)  #
+    CreateImageArray(ImgSize)  # create image array of resized images
+    X_train, y_train, X_test, y_test = SplitData()
+    plot(X_train)
+    #m = model.train_neural_network(X_train)
+    # define and train model
+    #Predict()  # test model
