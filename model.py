@@ -27,7 +27,7 @@ def convolutional_neural_network(x):
     #make weight dict with two hidden layers, een fc(full layer) layer en een output.
     weights = {'W_conv1': tf.Variable(tf.random_normal([5, 5, 1, 32])),
                'W_conv2': tf.Variable(tf.random_normal([5, 5, 32, 64])),
-               'W_fc': tf.Variable(tf.random_normal([7 * 7 * 64, 1024])),
+               'W_fc': tf.Variable(tf.random_normal([64 * 64 * 64, 1024])),
                'out': tf.Variable(tf.random_normal([1024, n_classes]))}
 
     biases = {'b_conv1': tf.Variable(tf.random_normal([32])),
@@ -36,42 +36,39 @@ def convolutional_neural_network(x):
               'out': tf.Variable(tf.random_normal([n_classes]))}
 
     #reshape image to 256*256
-    #x = tf.reshape(x, shape=[-1, 256, 256, 1])
-    #tf.to_float(x, name='ToFloat')
-    #
-    # #perform conv step
-    conv1 = tf.nn.relu(conv2d(x, weights['W_conv1']) + biases['b_conv1'])
-    # #pool conv1
-    # conv1 = maxpool2d(conv1)
-    #
-    # #perform conv step
-    # conv2 = tf.nn.relu(conv2d(conv1, weights['W_conv2']) + biases['b_conv2'])
-    # #pool conv2
-    # conv2 = maxpool2d(conv2)
-    #
-    # #for fc layer
-    # fc = tf.reshape(conv2, [-1, 7 * 7 * 64])
-    # fc = tf.nn.relu(tf.matmul(fc, weights['W_fc']) + biases['b_fc'])
-    #
-    # #perform dropout
-    # fc = tf.nn.dropout(fc, keep_rate)
-    #
-    # #make output layer
-    # output = tf.matmul(fc, weights['out']) + biases['out']
+    x = tf.reshape(x, shape=[-1, 256, 256, 1])
 
-    return x#output
+    #perform conv step
+    conv1 = tf.nn.relu(conv2d(x, weights['W_conv1']) + biases['b_conv1'])
+    #pool conv1
+    conv1 = maxpool2d(conv1)
+
+    # perform conv step
+    conv2 = tf.nn.relu(conv2d(conv1, weights['W_conv2']) + biases['b_conv2'])
+    #pool conv2
+    conv2 = maxpool2d(conv2)
+
+    #for fc layer
+    fc = tf.reshape(conv2, [-1, 64 * 64 * 64])
+    fc = tf.nn.relu(tf.matmul(fc, weights['W_fc']) + biases['b_fc'])
+
+    #perform dropout
+    fc = tf.nn.dropout(fc, keep_rate)
+    #
+    #make output layer
+    output = tf.matmul(fc, weights['out']) + biases['out']
+
+    return output
 
 #train sequence with input x = data
 def train_neural_network(x):
-    x_new = []
-
     print(" test ")
     #prediction with model
     prediction = convolutional_neural_network(x)
     print(prediction)
-    #print(tf.nn.softmax_cross_entropy_with_logits(prediction, y))
+    print(tf.nn.softmax_cross_entropy_with_logits(prediction, y))
 
-    #calculate cost?
+    #calculate cost
     # cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(prediction, y))
     # optimizer = tf.train.AdamOptimizer().minimize(cost)
     #
