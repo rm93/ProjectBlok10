@@ -5,7 +5,7 @@ import numpy as np
 n_classes = 15
 
 #Batches die hij selecteert en langs gaat
-batch_size = 128
+batch_size = 32
 
 x = tf.placeholder('float')#, [None, 65536])#65536
 y = tf.placeholder('float')
@@ -25,14 +25,14 @@ def maxpool2d(x):
 #CNN model definition
 def convolutional_neural_network(x):
     #make weight dict with two hidden layers, een fc(full layer) layer en een output.
-    weights = {'W_conv1': tf.Variable(tf.random_normal([5, 5, 1, 32])),
-               'W_conv2': tf.Variable(tf.random_normal([5, 5, 32, 64])),
-               'W_fc': tf.Variable(tf.random_normal([64 * 64 * 64, 1024])),
-               'out': tf.Variable(tf.random_normal([1024, n_classes]))}
+    weights = {'W_conv1': tf.Variable(tf.random_normal([4, 4, 1, 16])),
+               'W_conv2': tf.Variable(tf.random_normal([4, 4, 16, 32])),
+               'W_fc': tf.Variable(tf.random_normal([32 * 32 * 32, 512])),
+               'out': tf.Variable(tf.random_normal([512, n_classes]))}
 
-    biases = {'b_conv1': tf.Variable(tf.random_normal([32])),
-              'b_conv2': tf.Variable(tf.random_normal([64])),
-              'b_fc': tf.Variable(tf.random_normal([1024])),
+    biases = {'b_conv1': tf.Variable(tf.random_normal([16])),
+              'b_conv2': tf.Variable(tf.random_normal([32])),
+              'b_fc': tf.Variable(tf.random_normal([512])),
               'out': tf.Variable(tf.random_normal([n_classes]))}
 
     #reshape image to 256*256
@@ -49,7 +49,7 @@ def convolutional_neural_network(x):
     conv2 = maxpool2d(conv2)
 
     #for fc layer
-    fc = tf.reshape(conv2, [-1, 64 * 64 * 64])
+    fc = tf.reshape(conv2, [-1, 32 * 32 * 32])
     fc = tf.nn.relu(tf.matmul(fc, weights['W_fc']) + biases['b_fc'])
 
     #perform dropout
@@ -61,32 +61,33 @@ def convolutional_neural_network(x):
     return output
 
 #train sequence with input x = data
-def train_neural_network(x):
-    print(" test ")
-    numOfImages = tf.size(x)
+def train_neural_network(xData, yData):
+    print(len(xData))
+    #Convert X_train to float32
+    X_train = tf.cast(xData, tf.float32)
+    y_train = tf.cast(yData, tf.float32)
+    # print(" test "))
     #prediction with model
-    prediction = convolutional_neural_network(x)
+    prediction = convolutional_neural_network(X_train)
 
     #calculate cost
     new_y = tf.cast(y, tf.int32)
     entropy = tf.reduce_mean(tf.nn.sparse_softmax_cross_entropy_with_logits(labels=new_y, logits=prediction))
     optimizer = tf.train.AdamOptimizer().minimize(entropy)
 
-    hm_epochs = 10
+    hm_epochs = 1
     with tf.Session() as sess:
         sess.run(tf.global_variables_initializer())
 
         for epoch in range(hm_epochs):
             epoch_loss = 0
             i = 0
-            while i < len(x):
+            while i < len(xData):
                 start = i
                 end = i + batch_size
-                batch_x = np.array(x[start:end])
-                batch_y = np.array(y[start:end])
-
-                _, c = sess.run([optimizer, entropy], feed_dict={x: batch_x,
-                                                              y: batch_y})
+                batch_x = np.array(xData[start:end])
+                batch_y = np.array(yData[start:end])
+                _, c = sess.run([optimizer, entropy], feed_dict={x: batch_x,y: batch_y})
                 epoch_loss += c
                 i += batch_size
 
@@ -95,5 +96,9 @@ def train_neural_network(x):
             accuracy = tf.reduce_mean(tf.cast(correct, 'float'))
 
             print('Accuracy:', accuracy.eval({x: x, y: y}))
+
+
+    return
+
 def test_neural_network(x):
     return
