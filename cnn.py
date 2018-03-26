@@ -7,6 +7,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from tqdm import tqdm
+from keras.utils import np_utils
 
 import matplotlib.pyplot as plt
 import tensorflow as tf
@@ -71,9 +72,9 @@ def CreateImageArray(ImgSize):
     else:
         print("The image array is already processed")
 
-def SplitData():
+def SplitData(ImgSize):
     # Import data
-    labels = pd.read_csv("../ProjectBlok10/data/sample_labels.csv")
+    labels = pd.read_csv("../ProjectBlok10/data/new_sample_labels.csv")
     X = np.load("../ProjectBlok10/data/X_sample_"+str(ImgSize)+".npy")
 
     y = labels.Finding_Labels
@@ -83,6 +84,20 @@ def SplitData():
 
     print("The data is split into train and test data sets")
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    X_train = X_train.reshape(X_train.shape[0], ImgSize, ImgSize, 1)
+    X_test = X_test.reshape(X_test.shape[0], ImgSize, ImgSize, 1)
+
+    print("X_train Shape: ", X_train.shape)
+    print("X_test Shape: ", X_test.shape)
+
+    X_train = X_train.astype('float32')
+    X_test = X_test.astype('float32')
+
+    y_train = np_utils.to_categorical(y_train, 15)
+    y_test = np_utils.to_categorical(y_test, 15)
+    print("y_train Shape: ", y_train.shape)
+    print("y_test Shape: ", y_test.shape)
 
     return X_train, y_train, X_test, y_test
 
@@ -101,14 +116,14 @@ def Predict():
     return None
 
 if __name__ == '__main__':
-    ImgSize = 128  # 512
+    ImgSize = 28  # 512
 
     ResizeImages(path='../ProjectBlok10/data/images/', new_path='../ProjectBlok10/data/resized-' + str(ImgSize) + '/',
                  ImgSize=ImgSize)
     CreateNewCsv(ImgSize)  #
     CreateImageArray(ImgSize)  # create image array of resized images
-    X_train, y_train, X_test, y_test = SplitData()
+    X_train, y_train, X_test, y_test = SplitData(ImgSize)
     #plot(X_train)
-    m = model.train_neural_network(X_train, y_train)
+    m = model.train_neural_network(X_train, y_train, X_test, y_test)
     # define and train model
     #Predict()  # test model
