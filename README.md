@@ -3,22 +3,22 @@
 **Licence: GNU General Public License v3.0 (copy provided in directory)**<br />
 <br />
 Author: 
-- Rick Medemblik
 - Alex Staritsky
+- Rick Medemblik
 - William Sies
 - Lisanne Dijksma
 
 Contact:
-- rmedemblik93@gmail.com
 - alexstaritsky@hotmail.nl
+- rmedemblik93@gmail.com
 - willysieswilly@gmail.com
 - ldijksma@msn.com
          
 ### Description
 
-Met deze applicatie kan met behulp van röntgen foto’s van menselijke longen geidentificeerd worden of een patiet een vorm van tuborcoluse heeft of niet dit kan door gebruik te maken van machine learning. 
+With this application, X-rays can be used to identify photos of human lungs, whether a patient has a form of tuberculosis or not by using machine learning.
 
-Hier kan CUDA voor gebruikt worden om de executietijd van de applicatie te versnellen. 
+Here CUDA can be used to speed up the execution time of the application.
 
 ### Requirements
 
@@ -26,7 +26,7 @@ Hier kan CUDA voor gebruikt worden om de executietijd van de applicatie te versn
 - [Cudnn 8.0-linux-x64-v6.0](https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v6/prod/8.0_20170427/cudnn-8.0-linux-x64-v6.0-tgz)
 - H5py 2.7.1
 - Keras 2.1.5
-- Linux operating system. This software is developed on Linux Ubuntu 16.04<br />
+- Linux operating system. The software is developed on Linux Ubuntu 16.04<br />
 **WARNING: Experiences when using different operating systems may vary.**
 - Matplotlib 2.1.2
 - Numpy 1.14.2
@@ -41,34 +41,31 @@ Hier kan CUDA voor gebruikt worden om de executietijd van de applicatie te versn
 
 ### Preparations
 
-De data is te downloaden via de volgende [link](https://www.kaggle.com/kmader/pulmonary-chest-xray-abnormalities/downloads/ChinaSet_AllFiles.zip/1)
+The data can be downloaded via the following [link](https://www.kaggle.com/kmader/pulmonary-chest-xray-abnormalities/downloads/ChinaSet_AllFiles.zip/1)
 
-Deze data dient uitgepakt in de data folder geplaatst te worden. De structuur dient er als volgt uit te zien:
+The data from the zip file must be unpacked in the data folder. The structure should look like this:
 
     ProjectBlok10
-        Data
+        data
             ClinicalReadings
             CXR_png
 
 ### Usage
 
-Om het script te starten kan gebruikt worden gemaakt van de terminal of een IDE (tijdens de ontwikkeling is [pycharm](https://www.jetbrains.com/pycharm/download/#section=linux) gebruikt)
+To start the script you can use the terminal or an IDE (during the development [pycharm](https://www.jetbrains.com/pycharm/download/#section=linux) was used)
 
 #### Terminal
-- Zorg er voor dat alle Benodigheiden zijn geinstalleerd op je computer of in een virtual environment
-- ga naar de folder waar het script en de data zijn.
-- en voer het script uit met het commando: python cnn.py
+- Make sure all requerements are installed on your computer or in a virtual environment
+- Go to the folder where the script is.
+- And run the script with the command: `python cnn.py`
 
 #### IDE
 
-- Zorg er voor dat alle Benodigheiden zijn geinstalleerd op je computer of in een virtual environment
-- Open het project in de IDE
-- Zoek het bestand cnn.py op
-- En run het bestand
+- Make sure all requerements are installed on your computer or in a virtual environment
+- Open the project in the IDE
+- Look up the cnn.py file
+- And run the file
 
 ### Output
 
-Na het runnen van het script worden er verschillende mappen aangemaakt hier van is de output map het meest interessant omdat hier het gemaakte model en de confusion_matrix worden opgeslagen.
-
-
-
+After running the script several folders are created here the output map is the most interesting because here the created model, confusion_matrix and the results.csv are stored.
