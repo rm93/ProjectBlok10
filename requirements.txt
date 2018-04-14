@@ -1,7 +1,0 @@
-opencv-contrib-python
-pandas
-sklearn
-tqdm
-scipy
-
-
