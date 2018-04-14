@@ -22,12 +22,18 @@ Here CUDA can be used to speed up the execution time of the application.
 
 ### Requirements
 
+#### System
+
 - [Cuda 8.0.61_375.26](https://developer.nvidia.com/compute/cuda/8.0/Prod2/local_installers/cuda_8.0.61_375.26_linux-run)
 - [Cudnn 8.0-linux-x64-v6.0](https://developer.nvidia.com/compute/machine-learning/cudnn/secure/v6/prod/8.0_20170427/cudnn-8.0-linux-x64-v6.0-tgz)
-- H5py 2.7.1
-- Keras 2.1.5
 - Linux operating system. The software is developed on Linux Ubuntu 16.04<br />
 **WARNING: Experiences when using different operating systems may vary.**
+- [Tensorflow 1.4.0](https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.4.0-cp36-cp36m-linux_x86_64.whl)
+
+#### Dependencies
+
+- H5py 2.7.1
+- Keras 2.1.5
 - Matplotlib 2.1.2
 - Numpy 1.14.2
 - Opencv-contrib-python 3.4.0.12
@@ -35,7 +41,6 @@ Here CUDA can be used to speed up the execution time of the application.
 - Python 3.6
 - Scipy 1.0.1
 - Sklearn
-- [Tensorflow 1.4.0](https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.4.0-cp36-cp36m-linux_x86_64.whl)
 - Tflearn 0.3.2
 - Tqdm 4.19.8
 
