@@ -55,6 +55,14 @@ The data from the zip file must be unpacked in the data folder. The structure sh
             ClinicalReadings
             CXR_png
 
+A model can be downloaded via the following [link](https://we.tl/56s3kqrHMZ)
+
+The model from the zip file must be unpacked in the output folder. The structure should look like this:
+
+    ProjectBlok10
+        output
+            cnn_model-100-10-3-3.h5
+            
 ### Usage
 
 To start the script you can use the terminal or an IDE (during the development [pycharm](https://www.jetbrains.com/pycharm/download/#section=linux) was used)
