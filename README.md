@@ -2,13 +2,13 @@
 
 **Licence: GNU General Public License v3.0 (copy provided in directory)**<br />
 <br />
-Author: 
+**Authors**: 
 - Alex Staritsky
 - Rick Medemblik
 - William Sies
 - Lisanne Dijksma
 
-Contact:
+**Contact**:
 - alexstaritsky@hotmail.nl
 - rmedemblik93@gmail.com
 - willysieswilly@gmail.com
