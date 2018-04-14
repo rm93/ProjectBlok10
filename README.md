@@ -16,7 +16,7 @@
          
 ### Description
 
-With this application, X-rays can be used to identify photos of human lungs, whether a patient has a form of tuberculosis or not by using machine learning.
+With this application, X-rays can be used to identify photos of human lungs, to find out whether a patient has a form of tuberculosis or not by using machine learning.
 
 Here CUDA can be used to speed up the execution time of the application.
 
@@ -60,13 +60,13 @@ The data from the zip file must be unpacked in the data folder. The structure sh
 To start the script you can use the terminal or an IDE (during the development [pycharm](https://www.jetbrains.com/pycharm/download/#section=linux) was used)
 
 #### Terminal
-- Make sure all requerements are installed on your computer or in a virtual environment
+- Make sure all requirements are installed on your computer or in a virtual environment
 - Go to the folder where the script is.
 - And run the script with the command: `python cnn.py`
 
 #### IDE
 
-- Make sure all requerements are installed on your computer or in a virtual environment
+- Make sure all requirements are installed on your computer or in a virtual environment
 - Open the project in the IDE
 - Look up the cnn.py file
 - And run the file
